@@ -40,7 +40,7 @@ pipeline {
         }
       }
       steps {
-        dir('pve-nodes/tf') {
+        dir('tf') {
           sh '''
             terraform init -no-color
           '''
