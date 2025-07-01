@@ -63,7 +63,7 @@ resource "proxmox_vm_qemu" "workers-light" {
   connection {
     type        = "ssh"
     user        = local.cloud_init.user
-    private_key = file("/Users/lucas/.ssh/id_rsa.pub")
+    private_key = var.ssh_public_key
     host = cidrhost(
       local.cidr,
       local.workers-light.network_last_octect + count.index

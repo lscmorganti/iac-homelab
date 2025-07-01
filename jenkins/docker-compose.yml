@@ -28,7 +28,7 @@ services:
       - jenkins-data:/var/jenkins_home
       - docker-cache:/var/lib/docker
   minio:
-    image: quay.io/minio/minio:latest
+    image: quay.io/minio/minio:RELEASE.2024-11-07T00-52-20Z
     command:
       - server
       - /data
