@@ -1,0 +1,35 @@
+[all]
+%{ for index in controlplanes.index ~}
+${ controlplanes.vm_name[index] } ansible_host=${ controlplanes.ip_address[index]} ansible_user=${ controlplanes.user[index] } etcd_member_name=etcd${index+1}
+%{ endfor ~}
+%{ for index in workers-light.index ~}
+${ workers-light.vm_name[index] } ansible_host=${ workers-light.ip_address[index]} ansible_user=${ workers-light.user[index] }
+%{ endfor ~}
+%{ for index in workers-heavy.index ~}
+${ workers-heavy.vm_name[index] } ansible_host=${ workers-heavy.ip_address[index]} ansible_user=${ workers-heavy.user[index] }
+%{ endfor ~}
+
+[kube_control_plane]
+%{ for index in controlplanes.index ~}
+${ controlplanes.vm_name[index] }
+%{ endfor ~}
+
+[etcd]
+%{ for index in controlplanes.index ~}
+${ controlplanes.vm_name[index] }
+%{ endfor ~}
+
+[kube_node]
+%{ for index in workers-light.index ~}
+${ workers-light.vm_name[index] }
+%{ endfor ~}
+%{ for index in workers-heavy.index ~}
+${ workers-heavy.vm_name[index] }
+%{ endfor ~}
+
+[calico_rr]
+
+[k8s_cluster:children]
+kube_control_plane
+kube_node
+calico_rr
