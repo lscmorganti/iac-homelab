@@ -38,7 +38,7 @@ locals {
   cloud_init = {
     user           = "user"
     password       = "user"
-    ssh_public_key = file("id_rsa")
+    ssh_public_key = file("id_rsa.pub")
   }
 
   # master specific configuration
