@@ -32,3 +32,5 @@ __pycache__/
 
 .terraform*
 *.tfstate
+id_rsa.pub
+id_rsa*

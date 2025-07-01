@@ -1,3 +1,5 @@
+version: '3.1'
+
 services:
   jenkins:
     build:
@@ -6,6 +8,8 @@ services:
       - DOCKER_HOST=tcp://docker:2376
       - DOCKER_CERT_PATH=/certs/client
       - DOCKER_TLS_VERIFY=1
+    networks:
+      - docker
     ports:
       - 8080:8080
       - 50000:50000
@@ -20,6 +24,10 @@ services:
     image: docker:dind
     privileged: true
     restart: always
+    networks:
+      docker:
+        aliases: 
+          - docker
     ports:
       - 2376:2376
     tty: true
@@ -27,6 +35,7 @@ services:
       - jenkins-docker-certs:/certs/client
       - jenkins-data:/var/jenkins_home
       - docker-cache:/var/lib/docker
+
   minio:
     image: quay.io/minio/minio:RELEASE.2024-11-07T00-52-20Z
     command:
@@ -37,12 +46,19 @@ services:
     ports:
       - 9000:9000
       - 9001:9001
+    networks:
+      docker:
+        aliases: 
+          - minio
     volumes:
       - minio_data:/data
     environment:
       - MINIO_ROOT_USER=root
       - MINIO_ROOT_PASSWORD=rootroot
       - MINIO_DEFAULT_BUCKETS=root
+
+networks:
+  docker:
 
 volumes:
   docker-cache:
