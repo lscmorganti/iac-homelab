@@ -16,7 +16,7 @@ terraform {
 
 
     endpoints = {
-      s3 = "http://operasinger.local:9000"
+      s3 = "http://172.18.0.2:9000"
     }
 
     skip_credentials_validation = true
